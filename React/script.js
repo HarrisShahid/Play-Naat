@@ -5,7 +5,7 @@ let myProgressBar = document.getElementById('myProgressBar');
 let gif = document.getElementById('gif');
 // let prePlay = document.getElementById('prePlay');
 let timer = document.getElementById('timer');
-let naatHeads = document.getElementById('naatHeads');
+let naatHeads = document.getElementsByClassName('naatHeads');
 let naatItem = Array.from(document.getElementsByClassName('naatItem'));
 let prePlay = Array.from(document.getElementsByClassName('prePlay'));
 
@@ -88,6 +88,7 @@ const makeAllPlays = () => {
 Array.from(document.getElementsByClassName('naatItemPlay')).forEach((element) => {
     element.addEventListener('click', (e) => {
         makeAllPlays();
+        // naatHeads.innerText = naats[naatIndex].naatName;
         naatIndex = parseInt(e.target.id);
         e.target.classList.remove('fa-circle-play');
         e.target.classList.add('fa-circle-pause');
@@ -100,12 +101,13 @@ Array.from(document.getElementsByClassName('naatItemPlay')).forEach((element) =>
 })
 
 document.getElementById('forPlay').addEventListener('click', () => {
-    if (naatIndex >= 9) {
-        naatIndex = 1
+    if (naatIndex >= 5) {
+        naatIndex = 0
     }
     else {
         naatIndex += 1;
     }
+    naatHeads.innerText = naats[naatIndex].naatName;
     audioElement.src = `naats/${naatIndex + 1}.mp3`;
     audioElement.play();
     gif.style.opacity = 1;
@@ -116,15 +118,22 @@ document.getElementById('forPlay').addEventListener('click', () => {
 
 document.getElementById('prePlay').addEventListener('click', () => {
     if (naatIndex <= 0) {
-        naatIndex = 1
+        naatIndex = 5
+        // console.log(naatIndex);
     }
     else {
         naatIndex -= 1;
+        // console.log(naatIndex);
+
     }
+    
     audioElement.src = `naats/${naatIndex + 1}.mp3`;
-    // audioElement.currentTime = 0;
+    naatHeads
+    audioElement.currentTime = 0;
     audioElement.play();
     gif.style.opacity = 1;
     masterPlay.classList.remove('fa-play-circle');
     masterPlay.classList.add('fa-pause-circle');
+    naatHeads.innerText = naats[naatIndex].naatName;
+    console.log(naatHeads.innerText);
 })
